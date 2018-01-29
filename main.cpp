@@ -2,7 +2,7 @@
 
 int main(char *argv[]) {
 
-    Princept princept = Princept(argv);
+    auto princept = Princept(argv);
     princept.StartInterpretation();
 
     return 0;
