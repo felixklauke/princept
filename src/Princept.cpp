@@ -4,10 +4,10 @@
 
 #include "Princept.h"
 
-void Princept::StartInterpretation() {
+Princept::Princept(char **cliArguments) {
 
 }
 
-Princept::Princept(char **cliArguments) {
+void Princept::StartInterpretation() {
 
 }
