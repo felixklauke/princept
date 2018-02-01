@@ -3,4 +3,4 @@ project(princept)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(princept main.cpp src/Princept.cpp src/Princept.h)
+add_executable(princept main.cpp src/Princept.cpp include/Princept.h)
