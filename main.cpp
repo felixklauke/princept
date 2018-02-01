@@ -1,4 +1,4 @@
-#include "src/Princept.h"
+#include "include/Princept.h"
 
 int main(char *argv[]) {
 
