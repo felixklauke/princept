@@ -4,4 +4,6 @@
 
 #include "Lexer.h"
 
-Lexer::Lexer(const std::string &content) : content(content) {}
+Lexer::Lexer(const std::string &content) : content(content) {
+
+}
