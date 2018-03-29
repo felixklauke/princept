@@ -6,16 +6,23 @@
 #define PRINCEPT_TOKENTYPE_H
 
 
+#include <map>
+
 enum class TokenType {
 
     LEFT_CURLY_BRACE,
     RIGHT_CURLY_BRACE,
+
     LEFT_BRACE,
     RIGHT_BRACE,
+
+    PLUS,
+    MINUS,
+
     DOT,
-    FUNCTION
 
+    END_OF_FILE,
+    UNKNOWN
 };
-
 
 #endif //PRINCEPT_TOKENTYPE_H

@@ -12,12 +12,12 @@
 class Token {
 
 private:
-    std::string *content;
+    std::string content;
 
     TokenType tokenType;
 
 public:
-    explicit Token(std::string *content, TokenType tokenType);
+    explicit Token(const std::string &content, TokenType tokenType);
 
     std::string getValue();
 
