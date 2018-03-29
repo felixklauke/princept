@@ -4,10 +4,14 @@
 
 #include "Token.h"
 
-Token::Token(std::string value) : content(value) {
+Token::Token(std::string *value, TokenType tokenType) : content(value), tokenType(tokenType) {
 
 }
 
 std::string Token::getValue() {
-    return content;
+    return *content;
+}
+
+TokenType Token::getTokenType() {
+    return tokenType;
 }

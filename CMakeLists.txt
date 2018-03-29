@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-add_executable(princept main.cpp src/Lexer.cpp include/Lexer.h src/Token.cpp include/Token.h)
+add_executable(princept main.cpp src/Lexer.cpp include/Lexer.h src/Token.cpp include/Token.h include/TokenType.h)

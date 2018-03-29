@@ -7,15 +7,22 @@
 
 
 #include <string>
+#include "TokenType.h"
 
 class Token {
+
 private:
-    std::string content;
+    std::string *content;
+
+    TokenType tokenType;
 
 public:
-    explicit Token(std::string content);
+    explicit Token(std::string *content, TokenType tokenType);
 
     std::string getValue();
+
+    TokenType getTokenType();
+
 };
 
 
