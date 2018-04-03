@@ -2,11 +2,13 @@ language: cpp
 compiler: gcc
 dist: trusty
 
+# Preparations
 before_install:
   # C++17
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get update -qq
 
+# Setup compiler etc.
 install: 
   # C++17
   - sudo apt-get install -qq g++-6
