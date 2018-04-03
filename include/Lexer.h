@@ -30,6 +30,8 @@ private:
     char peekCharacter();
 
     char readCharacter(unsigned long position);
+
+    std::string readIntegerToken();
 };
 
 

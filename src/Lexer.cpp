@@ -33,9 +33,11 @@ Token Lexer::readNextToken() {
         return Token(std::string(1, currentCharacter), TokenType::PLUS);
     } else if (currentCharacter == '-') {
         return Token(std::string(1, currentCharacter), TokenType::MINUS);
+    } else if (isdigit(currentCharacter)) {
+        return Token(readIntegerToken(), TokenType::INTEGER);
     }
 
-    return Token(std::string(1, currentCharacter), TokenType::UNKNOWN);
+    return Token("UNKNOWN", TokenType::UNKNOWN);
 }
 
 void Lexer::pollCharacter() {
@@ -48,10 +50,21 @@ char Lexer::peekCharacter() {
 }
 
 char Lexer::readCharacter(unsigned long position) {
-    if (position > content.size()) {
+    if (position >= content.size()) {
         endOfFileIsReached = true;
         return 0;
     }
 
     return content.at(position);
+}
+
+std::string Lexer::readIntegerToken() {
+    std::string current = current;
+
+    while (isdigit(currentCharacter)) {
+        current += currentCharacter;
+        pollCharacter();
+    }
+
+    return current;
 }

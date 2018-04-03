@@ -21,6 +21,8 @@ enum class TokenType {
 
     DOT,
 
+    INTEGER,
+
     END_OF_FILE,
     UNKNOWN
 };
