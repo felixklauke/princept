@@ -34,6 +34,10 @@ private:
     Token readIntegerToken();
 
     Token readAlphabeticToken();
+
+    Token readEqualityToken();
+
+    Token readNegationToken();
 };
 
 
