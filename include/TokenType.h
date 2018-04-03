@@ -27,6 +27,11 @@ enum class TokenType {
     CLASS,
     FUNCTION,
 
+    ASSIGN,
+    EQUALITY,
+    INEQUALITY,
+    NEGATION,
+
     LABEL,
 
     END_OF_FILE,

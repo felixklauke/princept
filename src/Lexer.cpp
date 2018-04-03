@@ -34,6 +34,10 @@ Token Lexer::readNextToken() {
         return Token(std::string(1, currentCharacter), TokenType::PLUS);
     } else if (currentCharacter == '-') {
         return Token(std::string(1, currentCharacter), TokenType::MINUS);
+    } else if (currentCharacter == '=') {
+        return readEqualityToken();
+    } else if (currentCharacter == '!') {
+        return readNegationToken();
     } else if (isdigit(currentCharacter)) {
         return readIntegerToken();
     } else if (isalpha(currentCharacter)) {
@@ -65,8 +69,13 @@ Token Lexer::readIntegerToken() {
     std::string current;
 
     while (isdigit(currentCharacter)) {
-        pollCharacter();
         current += currentCharacter;
+
+        if (!isdigit(peekCharacter())) {
+            break;
+        }
+
+        pollCharacter();
     }
 
     return Token(current, TokenType::INTEGER);
@@ -98,4 +107,22 @@ Token Lexer::readAlphabeticToken() {
     }
 
     return Token(current, TokenType::LABEL);
+}
+
+Token Lexer::readEqualityToken() {
+    if (peekCharacter() == '=') {
+        pollCharacter();
+        return Token("==", TokenType::EQUALITY);
+    }
+
+    return Token(std::string(1, currentCharacter), TokenType::ASSIGN);
+}
+
+Token Lexer::readNegationToken() {
+    if (peekCharacter() == '=') {
+        pollCharacter();
+        return Token("!=", TokenType::INEQUALITY);
+    }
+
+    return Token(std::string(1, currentCharacter), TokenType::NEGATION);
 }
