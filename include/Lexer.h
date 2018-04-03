@@ -30,6 +30,14 @@ private:
     char peekCharacter();
 
     char readCharacter(unsigned long position);
+
+    Token readIntegerToken();
+
+    Token readAlphabeticToken();
+
+    Token readEqualityToken();
+
+    Token readNegationToken();
 };
 
 

@@ -21,6 +21,19 @@ enum class TokenType {
 
     DOT,
 
+    BOOL,
+    INTEGER,
+
+    CLASS,
+    FUNCTION,
+
+    ASSIGN,
+    EQUALITY,
+    INEQUALITY,
+    NEGATION,
+
+    LABEL,
+
     END_OF_FILE,
     UNKNOWN
 };
