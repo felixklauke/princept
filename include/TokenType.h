@@ -19,10 +19,16 @@ enum class TokenType {
     PLUS,
     MINUS,
 
+    GREATER,
+    SMALLER,
+    GREATER_OR_EQUAL,
+    SMALLER_OR_EQUAL,
+
     DOT,
 
     BOOL,
     INTEGER,
+    STRING,
 
     CLASS,
     FUNCTION,

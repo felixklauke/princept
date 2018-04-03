@@ -38,6 +38,12 @@ private:
     Token readEqualityToken();
 
     Token readNegationToken();
+
+    Token readString();
+
+    Token readSmallerToken();
+
+    Token readGreaterToken();
 };
 
 
