@@ -31,7 +31,9 @@ private:
 
     char readCharacter(unsigned long position);
 
-    std::string readIntegerToken();
+    Token readIntegerToken();
+
+    Token readAlphabeticToken();
 };
 
 

@@ -2,6 +2,7 @@
 // Created by Felix Klauke on 23.02.18.
 //
 
+#include <iostream>
 #include "Lexer.h"
 
 Lexer::Lexer(const std::string &content) : content(content) {
@@ -34,7 +35,9 @@ Token Lexer::readNextToken() {
     } else if (currentCharacter == '-') {
         return Token(std::string(1, currentCharacter), TokenType::MINUS);
     } else if (isdigit(currentCharacter)) {
-        return Token(readIntegerToken(), TokenType::INTEGER);
+        return readIntegerToken();
+    } else if (isalpha(currentCharacter)) {
+        return readAlphabeticToken();
     }
 
     return Token("UNKNOWN", TokenType::UNKNOWN);
@@ -58,13 +61,41 @@ char Lexer::readCharacter(unsigned long position) {
     return content.at(position);
 }
 
-std::string Lexer::readIntegerToken() {
-    std::string current = current;
+Token Lexer::readIntegerToken() {
+    std::string current;
 
     while (isdigit(currentCharacter)) {
+        pollCharacter();
         current += currentCharacter;
+    }
+
+    return Token(current, TokenType::INTEGER);
+}
+
+Token Lexer::readAlphabeticToken() {
+    std::string current;
+
+    while (isalpha(currentCharacter)) {
+        current += currentCharacter;
+
+        if (!isalpha(peekCharacter())) {
+            break;
+        }
+
         pollCharacter();
     }
 
-    return current;
+    if (current == "class") {
+        return Token(current, TokenType::CLASS);
+    }
+
+    if (current == "function") {
+        return Token(current, TokenType::FUNCTION);
+    }
+
+    if (current == "true" || current == "false") {
+        return Token(current, TokenType::BOOL);
+    }
+
+    return Token(current, TokenType::LABEL);
 }

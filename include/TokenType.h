@@ -21,7 +21,13 @@ enum class TokenType {
 
     DOT,
 
+    BOOL,
     INTEGER,
+
+    CLASS,
+    FUNCTION,
+
+    LABEL,
 
     END_OF_FILE,
     UNKNOWN
