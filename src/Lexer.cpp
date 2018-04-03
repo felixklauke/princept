@@ -36,8 +36,14 @@ Token Lexer::readNextToken() {
         return Token(std::string(1, currentCharacter), TokenType::MINUS);
     } else if (currentCharacter == '.') {
         return Token(std::string(1, currentCharacter), TokenType::DOT);
+    } else if (currentCharacter == '<') {
+        return readSmallerToken();
+    } else if (currentCharacter == '>') {
+        return readGreaterToken();
     } else if (currentCharacter == '=') {
         return readEqualityToken();
+    } else if (currentCharacter == '"') {
+        return readString();
     } else if (currentCharacter == '!') {
         return readNegationToken();
     } else if (isdigit(currentCharacter)) {
@@ -147,4 +153,34 @@ Token Lexer::readNegationToken() {
     }
 
     return Token(std::string(1, currentCharacter), TokenType::NEGATION);
+}
+
+Token Lexer::readString() {
+    std::string current;
+
+    pollCharacter();
+    while (currentCharacter != '"') {
+        current += currentCharacter;
+        pollCharacter();
+    }
+
+    return Token(current, TokenType::STRING);
+}
+
+Token Lexer::readSmallerToken() {
+    if (peekCharacter() == '=') {
+        pollCharacter();
+        return Token("<=", TokenType::SMALLER_OR_EQUAL);
+    }
+
+    return Token(std::string(1, currentCharacter), TokenType::SMALLER);
+}
+
+Token Lexer::readGreaterToken() {
+    if (peekCharacter() == '>') {
+        pollCharacter();
+        return Token(">=", TokenType::GREATER_OR_EQUAL);
+    }
+
+    return Token(std::string(1, currentCharacter), TokenType::GREATER);
 }
