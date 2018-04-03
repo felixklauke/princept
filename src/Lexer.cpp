@@ -34,6 +34,8 @@ Token Lexer::readNextToken() {
         return Token(std::string(1, currentCharacter), TokenType::PLUS);
     } else if (currentCharacter == '-') {
         return Token(std::string(1, currentCharacter), TokenType::MINUS);
+    } else if (currentCharacter == '.') {
+        return Token(std::string(1, currentCharacter), TokenType::DOT);
     } else if (currentCharacter == '=') {
         return readEqualityToken();
     } else if (currentCharacter == '!') {
@@ -104,6 +106,26 @@ Token Lexer::readAlphabeticToken() {
 
     if (current == "true" || current == "false") {
         return Token(current, TokenType::BOOL);
+    }
+
+    if (current == "for") {
+        return Token(current, TokenType::FOR);
+    }
+
+    if (current == "while") {
+        return Token(current, TokenType::WHILE);
+    }
+
+    if (current == "return") {
+        return Token(current, TokenType::RETURN);
+    }
+
+    if (current == "if") {
+        return Token(current, TokenType::IF);
+    }
+
+    if (current == "else") {
+        return Token(current, TokenType::ELSE);
     }
 
     return Token(current, TokenType::LABEL);

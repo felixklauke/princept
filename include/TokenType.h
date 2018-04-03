@@ -27,6 +27,12 @@ enum class TokenType {
     CLASS,
     FUNCTION,
 
+    FOR,
+    WHILE,
+    IF,
+    ELSE,
+    RETURN,
+
     ASSIGN,
     EQUALITY,
     INEQUALITY,
