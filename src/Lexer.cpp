@@ -9,11 +9,11 @@ Lexer::Lexer(const std::string &content) : content(content) {
 
 }
 
-Token Lexer::readNextToken() {
+Token *Lexer::readNextToken() {
     peekCharacter();
 
     if (endOfFileIsReached) {
-        return Token("END_OF_FILE", TokenType::END_OF_FILE);
+        return new Token("END_OF_FILE", TokenType::END_OF_FILE);
     }
 
     pollCharacter();
@@ -23,19 +23,19 @@ Token Lexer::readNextToken() {
     }
 
     if (currentCharacter == '{') {
-        return Token(std::string(1, currentCharacter), TokenType::LEFT_CURLY_BRACE);
+        return new Token(std::string(1, currentCharacter), TokenType::LEFT_CURLY_BRACE);
     } else if (currentCharacter == '}') {
-        return Token(std::string(1, currentCharacter), TokenType::RIGHT_CURLY_BRACE);
+        return new Token(std::string(1, currentCharacter), TokenType::RIGHT_CURLY_BRACE);
     } else if (currentCharacter == '(') {
-        return Token(std::string(1, currentCharacter), TokenType::LEFT_BRACE);
+        return new Token(std::string(1, currentCharacter), TokenType::LEFT_BRACE);
     } else if (currentCharacter == ')') {
-        return Token(std::string(1, currentCharacter), TokenType::RIGHT_BRACE);
+        return new Token(std::string(1, currentCharacter), TokenType::RIGHT_BRACE);
     } else if (currentCharacter == '+') {
-        return Token(std::string(1, currentCharacter), TokenType::PLUS);
+        return new Token(std::string(1, currentCharacter), TokenType::PLUS);
     } else if (currentCharacter == '-') {
-        return Token(std::string(1, currentCharacter), TokenType::MINUS);
+        return new Token(std::string(1, currentCharacter), TokenType::MINUS);
     } else if (currentCharacter == '.') {
-        return Token(std::string(1, currentCharacter), TokenType::DOT);
+        return new Token(std::string(1, currentCharacter), TokenType::DOT);
     } else if (currentCharacter == '<') {
         return readSmallerToken();
     } else if (currentCharacter == '>') {
@@ -52,7 +52,7 @@ Token Lexer::readNextToken() {
         return readAlphabeticToken();
     }
 
-    return Token("UNKNOWN", TokenType::UNKNOWN);
+    return new Token("UNKNOWN", TokenType::UNKNOWN);
 }
 
 void Lexer::pollCharacter() {
@@ -73,7 +73,7 @@ char Lexer::readCharacter(unsigned long position) {
     return content.at(position);
 }
 
-Token Lexer::readIntegerToken() {
+Token *Lexer::readIntegerToken() {
     std::string current;
 
     while (isdigit(currentCharacter)) {
@@ -86,10 +86,10 @@ Token Lexer::readIntegerToken() {
         pollCharacter();
     }
 
-    return Token(current, TokenType::INTEGER);
+    return new Token(current, TokenType::INTEGER);
 }
 
-Token Lexer::readAlphabeticToken() {
+Token *Lexer::readAlphabeticToken() {
     std::string current;
 
     while (isalpha(currentCharacter)) {
@@ -103,59 +103,59 @@ Token Lexer::readAlphabeticToken() {
     }
 
     if (current == "class") {
-        return Token(current, TokenType::CLASS);
+        return new Token(current, TokenType::CLASS);
     }
 
     if (current == "function") {
-        return Token(current, TokenType::FUNCTION);
+        return new Token(current, TokenType::FUNCTION);
     }
 
     if (current == "true" || current == "false") {
-        return Token(current, TokenType::BOOL);
+        return new Token(current, TokenType::BOOL);
     }
 
     if (current == "for") {
-        return Token(current, TokenType::FOR);
+        return new Token(current, TokenType::FOR);
     }
 
     if (current == "while") {
-        return Token(current, TokenType::WHILE);
+        return new Token(current, TokenType::WHILE);
     }
 
     if (current == "return") {
-        return Token(current, TokenType::RETURN);
+        return new Token(current, TokenType::RETURN);
     }
 
     if (current == "if") {
-        return Token(current, TokenType::IF);
+        return new Token(current, TokenType::IF);
     }
 
     if (current == "else") {
-        return Token(current, TokenType::ELSE);
+        return new Token(current, TokenType::ELSE);
     }
 
-    return Token(current, TokenType::LABEL);
+    return new Token(current, TokenType::LABEL);
 }
 
-Token Lexer::readEqualityToken() {
+Token *Lexer::readEqualityToken() {
     if (peekCharacter() == '=') {
         pollCharacter();
-        return Token("==", TokenType::EQUALITY);
+        return new Token("==", TokenType::EQUALITY);
     }
 
-    return Token(std::string(1, currentCharacter), TokenType::ASSIGN);
+    return new Token(std::string(1, currentCharacter), TokenType::ASSIGN);
 }
 
-Token Lexer::readNegationToken() {
+Token *Lexer::readNegationToken() {
     if (peekCharacter() == '=') {
         pollCharacter();
-        return Token("!=", TokenType::INEQUALITY);
+        return new Token("!=", TokenType::INEQUALITY);
     }
 
-    return Token(std::string(1, currentCharacter), TokenType::NEGATION);
+    return new Token(std::string(1, currentCharacter), TokenType::NEGATION);
 }
 
-Token Lexer::readString() {
+Token *Lexer::readString() {
     std::string current;
 
     pollCharacter();
@@ -164,23 +164,23 @@ Token Lexer::readString() {
         pollCharacter();
     }
 
-    return Token(current, TokenType::STRING);
+    return new Token(current, TokenType::STRING);
 }
 
-Token Lexer::readSmallerToken() {
+Token *Lexer::readSmallerToken() {
     if (peekCharacter() == '=') {
         pollCharacter();
-        return Token("<=", TokenType::SMALLER_OR_EQUAL);
+        return new Token("<=", TokenType::SMALLER_OR_EQUAL);
     }
 
-    return Token(std::string(1, currentCharacter), TokenType::SMALLER);
+    return new Token(std::string(1, currentCharacter), TokenType::SMALLER);
 }
 
-Token Lexer::readGreaterToken() {
+Token *Lexer::readGreaterToken() {
     if (peekCharacter() == '>') {
         pollCharacter();
-        return Token(">=", TokenType::GREATER_OR_EQUAL);
+        return new Token(">=", TokenType::GREATER_OR_EQUAL);
     }
 
-    return Token(std::string(1, currentCharacter), TokenType::GREATER);
+    return new Token(std::string(1, currentCharacter), TokenType::GREATER);
 }

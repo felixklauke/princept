@@ -7,17 +7,26 @@
 
 
 #include "Lexer.h"
+#include "Node.h"
+#include "ClassNode.h"
 
 class Parser {
 
 public:
     explicit Parser(const Lexer &lexer);
 
-    void parse();
+    Node *parse();
 
 private:
     Lexer lexer;
 
+    Token *currentToken;
+
+    ClassNode *parseClass();
+
+    void eatToken(TokenType type);
+
+    FunctionNode *parseFunction();
 };
 
 
