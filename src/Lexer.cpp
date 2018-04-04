@@ -134,6 +134,14 @@ Token *Lexer::readAlphabeticToken() {
         return new Token(current, TokenType::ELSE);
     }
 
+    if (current == "int") {
+        return new Token(current, TokenType::INTEGER);
+    }
+
+    if (current == "String") {
+        return new Token(current, TokenType::STRING);
+    }
+
     return new Token(current, TokenType::LABEL);
 }
 

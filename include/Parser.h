@@ -9,6 +9,7 @@
 #include "Lexer.h"
 #include "Node.h"
 #include "ClassNode.h"
+#include "StatementNode.h"
 
 class Parser {
 
@@ -27,6 +28,12 @@ private:
     void eatToken(TokenType type);
 
     FunctionNode *parseFunction();
+
+    StatementNode *parseStatement();
+
+    StatementNode *parseVariableStatement();
+
+    Node *parseValue();
 };
 
 

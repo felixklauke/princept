@@ -5,6 +5,10 @@
 #include <RootNode.h>
 #include <ClassNode.h>
 #include <iostream>
+#include <StatementNode.h>
+#include <VarDeclarationNode.h>
+#include <VarAssignNode.h>
+#include <IntegerNode.h>
 #include "Parser.h"
 
 Parser::Parser(const Lexer &lexer) : lexer(lexer) {
@@ -70,7 +74,10 @@ FunctionNode *Parser::parseFunction() {
 
     eatToken(TokenType::LEFT_CURLY_BRACE);
     std::vector<Node *> statements = std::vector<Node *>();
-    // Statements
+    while (currentToken->getTokenType() != TokenType::RIGHT_CURLY_BRACE) {
+        StatementNode *statementNode = parseStatement();
+        statements.push_back(statementNode);
+    }
     eatToken(TokenType::RIGHT_CURLY_BRACE);
 
     auto *functionNode = new FunctionNode(&functionName, statements);
@@ -78,4 +85,42 @@ FunctionNode *Parser::parseFunction() {
     std::cout << "Found function " << functionName << " with " << statements.size() << " statements" << std::endl;
 
     return functionNode;
+}
+
+StatementNode *Parser::parseStatement() {
+    if (currentToken->getTokenType() == TokenType::INTEGER || currentToken->getTokenType() == TokenType::STRING) {
+        return parseVariableStatement();
+    }
+}
+
+StatementNode *Parser::parseVariableStatement() {
+    TokenType variableType = currentToken->getTokenType();
+    eatToken(variableType);
+
+    std::string variableName = currentToken->getValue();
+    eatToken(TokenType::LABEL);
+
+    if (currentToken->getTokenType() == TokenType::ASSIGN) {
+        eatToken(TokenType::ASSIGN);
+
+        auto *variableStatement = new VarAssignNode(&variableName, variableType, parseValue());
+
+        std::cout << "Found declared and assigned variable " << variableName << std::endl;
+
+        return variableStatement;
+    }
+
+    auto *variableStatement = new VarDeclarationNode(&variableName, variableType);
+
+    std::cout << "Found declared variable " << variableName << "." << std::endl;
+
+    return variableStatement;
+}
+
+Node *Parser::parseValue() {
+    if (currentToken->getTokenType() == TokenType::INTEGER) {
+        IntegerNode *integerNode = new IntegerNode(std::stoi(currentToken->getValue()));
+        eatToken(TokenType::INTEGER);
+        return integerNode;
+    }
 }
