@@ -26,5 +26,6 @@ int main(int arg, char *argv[]) {
     Parser parser = Parser(lexer);
     Node *node = parser.parse();
 
+
     return 0;
 }

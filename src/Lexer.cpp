@@ -22,6 +22,14 @@ Token *Lexer::readNextToken() {
         return readNextToken();
     }
 
+    if (isalpha(currentCharacter)) {
+        return readAlphabeticToken();
+    }
+
+    if (isdigit(currentCharacter)) {
+        return readIntegerToken();
+    }
+
     if (currentCharacter == '{') {
         return new Token(std::string(1, currentCharacter), TokenType::LEFT_CURLY_BRACE);
     } else if (currentCharacter == '}') {
@@ -46,10 +54,6 @@ Token *Lexer::readNextToken() {
         return readString();
     } else if (currentCharacter == '!') {
         return readNegationToken();
-    } else if (isdigit(currentCharacter)) {
-        return readIntegerToken();
-    } else if (isalpha(currentCharacter)) {
-        return readAlphabeticToken();
     }
 
     return new Token("UNKNOWN", TokenType::UNKNOWN);
@@ -140,6 +144,10 @@ Token *Lexer::readAlphabeticToken() {
 
     if (current == "String") {
         return new Token(current, TokenType::STRING);
+    }
+
+    if (peekCharacter() == '(') {
+        return new Token(current, TokenType::FUNCTION_CALL);
     }
 
     return new Token(current, TokenType::LABEL);

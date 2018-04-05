@@ -32,6 +32,7 @@ enum class TokenType {
 
     CLASS,
     FUNCTION,
+    FUNCTION_CALL,
 
     FOR,
     WHILE,

@@ -66,7 +66,7 @@ void Parser::eatToken(TokenType type) {
 FunctionNode *Parser::parseFunction() {
     eatToken(TokenType::FUNCTION);
     std::string functionName = currentToken->getValue();
-    eatToken(TokenType::LABEL);
+    eatToken(TokenType::FUNCTION_CALL);
 
     eatToken(TokenType::LEFT_BRACE);
     // Parameters
