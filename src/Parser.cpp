@@ -16,12 +16,12 @@ Parser::Parser(const Lexer &lexer) : lexer(lexer) {
 }
 
 Node *Parser::parse() {
-    currentToken = lexer.readNextToken();
+    currentToken = lexer.ReadNextToken();
 
     std::vector<Node *> classNodes = std::vector<Node *>();
 
-    while (currentToken->getTokenType() == TokenType::CLASS) {
-        ClassNode *classNode = parseClass();
+    while (currentToken->GetTokenType() == TokenType::CLASS) {
+        ClassNode *classNode = ParseClass();
         classNodes.push_back(classNode);
     }
 
@@ -32,19 +32,19 @@ Node *Parser::parse() {
     return rootNode;
 }
 
-ClassNode *Parser::parseClass() {
+ClassNode *Parser::ParseClass() {
     std::vector<FunctionNode *> functionNodes = std::vector<FunctionNode *>();
 
-    eatToken(TokenType::CLASS);
-    std::string className = currentToken->getValue();
-    eatToken(TokenType::LABEL);
+    EatToken(TokenType::CLASS);
+    std::string className = currentToken->GetValue();
+    EatToken(TokenType::LABEL);
 
-    eatToken(TokenType::LEFT_CURLY_BRACE);
-    while (currentToken->getTokenType() == TokenType::FUNCTION) {
-        FunctionNode *functionNode = parseFunction();
+    EatToken(TokenType::LEFT_CURLY_BRACE);
+    while (currentToken->GetTokenType() == TokenType::FUNCTION) {
+        FunctionNode *functionNode = ParseFunction();
         functionNodes.push_back(functionNode);
     }
-    eatToken(TokenType::RIGHT_CURLY_BRACE);
+    EatToken(TokenType::RIGHT_CURLY_BRACE);
 
     auto *classNode = new ClassNode(className, &functionNodes);
 
@@ -53,32 +53,32 @@ ClassNode *Parser::parseClass() {
     return classNode;
 }
 
-void Parser::eatToken(TokenType type) {
-    if (currentToken->getTokenType() == type) {
-        Token *token = lexer.readNextToken();
+void Parser::EatToken(TokenType type) {
+    if (currentToken->GetTokenType() == type) {
+        Token *token = lexer.ReadNextToken();
         currentToken = token;
         return;
     }
 
-    throw std::invalid_argument("Unexpected token " + currentToken->getValue());
+    throw std::invalid_argument("Unexpected token " + currentToken->GetValue());
 }
 
-FunctionNode *Parser::parseFunction() {
-    eatToken(TokenType::FUNCTION);
-    std::string functionName = currentToken->getValue();
-    eatToken(TokenType::FUNCTION_CALL);
+FunctionNode *Parser::ParseFunction() {
+    EatToken(TokenType::FUNCTION);
+    std::string functionName = currentToken->GetValue();
+    EatToken(TokenType::FUNCTION_CALL);
 
-    eatToken(TokenType::LEFT_BRACE);
+    EatToken(TokenType::LEFT_BRACE);
     // Parameters
-    eatToken(TokenType::RIGHT_BRACE);
+    EatToken(TokenType::RIGHT_BRACE);
 
-    eatToken(TokenType::LEFT_CURLY_BRACE);
+    EatToken(TokenType::LEFT_CURLY_BRACE);
     std::vector<Node *> statements = std::vector<Node *>();
-    while (currentToken->getTokenType() != TokenType::RIGHT_CURLY_BRACE) {
-        StatementNode *statementNode = parseStatement();
+    while (currentToken->GetTokenType() != TokenType::RIGHT_CURLY_BRACE) {
+        StatementNode *statementNode = ParseStatement();
         statements.push_back(statementNode);
     }
-    eatToken(TokenType::RIGHT_CURLY_BRACE);
+    EatToken(TokenType::RIGHT_CURLY_BRACE);
 
     auto *functionNode = new FunctionNode(&functionName, statements);
 
@@ -87,23 +87,23 @@ FunctionNode *Parser::parseFunction() {
     return functionNode;
 }
 
-StatementNode *Parser::parseStatement() {
-    if (currentToken->getTokenType() == TokenType::INTEGER || currentToken->getTokenType() == TokenType::STRING) {
-        return parseVariableStatement();
+StatementNode *Parser::ParseStatement() {
+    if (currentToken->GetTokenType() == TokenType::INTEGER || currentToken->GetTokenType() == TokenType::STRING) {
+        return ParseVariableStatement();
     }
 }
 
-StatementNode *Parser::parseVariableStatement() {
-    TokenType variableType = currentToken->getTokenType();
-    eatToken(variableType);
+StatementNode *Parser::ParseVariableStatement() {
+    TokenType variableType = currentToken->GetTokenType();
+    EatToken(variableType);
 
-    std::string variableName = currentToken->getValue();
-    eatToken(TokenType::LABEL);
+    std::string variableName = currentToken->GetValue();
+    EatToken(TokenType::LABEL);
 
-    if (currentToken->getTokenType() == TokenType::ASSIGN) {
-        eatToken(TokenType::ASSIGN);
+    if (currentToken->GetTokenType() == TokenType::ASSIGN) {
+        EatToken(TokenType::ASSIGN);
 
-        auto *variableStatement = new VarAssignNode(&variableName, variableType, parseValue());
+        auto *variableStatement = new VarAssignNode(&variableName, variableType, ParseValue());
 
         std::cout << "Found declared and assigned variable " << variableName << std::endl;
 
@@ -117,10 +117,10 @@ StatementNode *Parser::parseVariableStatement() {
     return variableStatement;
 }
 
-Node *Parser::parseValue() {
-    if (currentToken->getTokenType() == TokenType::INTEGER) {
-        IntegerNode *integerNode = new IntegerNode(std::stoi(currentToken->getValue()));
-        eatToken(TokenType::INTEGER);
+Node *Parser::ParseValue() {
+    if (currentToken->GetTokenType() == TokenType::INTEGER) {
+        IntegerNode *integerNode = new IntegerNode(std::stoi(currentToken->GetValue()));
+        EatToken(TokenType::INTEGER);
         return integerNode;
     }
 }

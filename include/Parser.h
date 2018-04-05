@@ -23,17 +23,17 @@ private:
 
     Token *currentToken;
 
-    ClassNode *parseClass();
+    ClassNode *ParseClass();
 
-    void eatToken(TokenType type);
+    void EatToken(TokenType type);
 
-    FunctionNode *parseFunction();
+    FunctionNode *ParseFunction();
 
-    StatementNode *parseStatement();
+    StatementNode *ParseStatement();
 
-    StatementNode *parseVariableStatement();
+    StatementNode *ParseVariableStatement();
 
-    Node *parseValue();
+    Node *ParseValue();
 };
 
 

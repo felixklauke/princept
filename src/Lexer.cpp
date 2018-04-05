@@ -9,25 +9,25 @@ Lexer::Lexer(const std::string &content) : content(content) {
 
 }
 
-Token *Lexer::readNextToken() {
-    peekCharacter();
+Token *Lexer::ReadNextToken() {
+    PeekCharacter();
 
     if (endOfFileIsReached) {
         return new Token("END_OF_FILE", TokenType::END_OF_FILE);
     }
 
-    pollCharacter();
+    PollCharacter();
 
     if (iswspace(currentCharacter)) {
-        return readNextToken();
+        return ReadNextToken();
     }
 
     if (isalpha(currentCharacter)) {
-        return readAlphabeticToken();
+        return ReadAlphabeticToken();
     }
 
     if (isdigit(currentCharacter)) {
-        return readIntegerToken();
+        return ReadIntegerToken();
     }
 
     if (currentCharacter == '{') {
@@ -45,30 +45,30 @@ Token *Lexer::readNextToken() {
     } else if (currentCharacter == '.') {
         return new Token(std::string(1, currentCharacter), TokenType::DOT);
     } else if (currentCharacter == '<') {
-        return readSmallerToken();
+        return ReadSmallerToken();
     } else if (currentCharacter == '>') {
-        return readGreaterToken();
+        return ReadGreaterToken();
     } else if (currentCharacter == '=') {
-        return readEqualityToken();
+        return ReadEqualityToken();
     } else if (currentCharacter == '"') {
-        return readString();
+        return ReadString();
     } else if (currentCharacter == '!') {
-        return readNegationToken();
+        return ReadNegationToken();
     }
 
     return new Token("UNKNOWN", TokenType::UNKNOWN);
 }
 
-void Lexer::pollCharacter() {
-    currentCharacter = readCharacter(currentReaderPosition);
+void Lexer::PollCharacter() {
+    currentCharacter = ReadCharacter(currentReaderPosition);
     currentReaderPosition++;
 }
 
-char Lexer::peekCharacter() {
-    return readCharacter(currentReaderPosition);
+char Lexer::PeekCharacter() {
+    return ReadCharacter(currentReaderPosition);
 }
 
-char Lexer::readCharacter(unsigned long position) {
+char Lexer::ReadCharacter(unsigned long position) {
     if (position >= content.size()) {
         endOfFileIsReached = true;
         return 0;
@@ -77,33 +77,33 @@ char Lexer::readCharacter(unsigned long position) {
     return content.at(position);
 }
 
-Token *Lexer::readIntegerToken() {
+Token *Lexer::ReadIntegerToken() {
     std::string current;
 
     while (isdigit(currentCharacter)) {
         current += currentCharacter;
 
-        if (!isdigit(peekCharacter())) {
+        if (!isdigit(PeekCharacter())) {
             break;
         }
 
-        pollCharacter();
+        PollCharacter();
     }
 
     return new Token(current, TokenType::INTEGER);
 }
 
-Token *Lexer::readAlphabeticToken() {
+Token *Lexer::ReadAlphabeticToken() {
     std::string current;
 
     while (isalpha(currentCharacter) || isdigit(currentCharacter)) {
         current += currentCharacter;
 
-        if (!isalpha(peekCharacter())) {
+        if (!isalpha(PeekCharacter())) {
             break;
         }
 
-        pollCharacter();
+        PollCharacter();
     }
 
     if (current == "class") {
@@ -146,55 +146,55 @@ Token *Lexer::readAlphabeticToken() {
         return new Token(current, TokenType::STRING);
     }
 
-    if (peekCharacter() == '(') {
+    if (PeekCharacter() == '(') {
         return new Token(current, TokenType::FUNCTION_CALL);
     }
 
     return new Token(current, TokenType::LABEL);
 }
 
-Token *Lexer::readEqualityToken() {
-    if (peekCharacter() == '=') {
-        pollCharacter();
+Token *Lexer::ReadEqualityToken() {
+    if (PeekCharacter() == '=') {
+        PollCharacter();
         return new Token("==", TokenType::EQUALITY);
     }
 
     return new Token(std::string(1, currentCharacter), TokenType::ASSIGN);
 }
 
-Token *Lexer::readNegationToken() {
-    if (peekCharacter() == '=') {
-        pollCharacter();
+Token *Lexer::ReadNegationToken() {
+    if (PeekCharacter() == '=') {
+        PollCharacter();
         return new Token("!=", TokenType::INEQUALITY);
     }
 
     return new Token(std::string(1, currentCharacter), TokenType::NEGATION);
 }
 
-Token *Lexer::readString() {
+Token *Lexer::ReadString() {
     std::string current;
 
-    pollCharacter();
+    PollCharacter();
     while (currentCharacter != '"') {
         current += currentCharacter;
-        pollCharacter();
+        PollCharacter();
     }
 
     return new Token(current, TokenType::STRING);
 }
 
-Token *Lexer::readSmallerToken() {
-    if (peekCharacter() == '=') {
-        pollCharacter();
+Token *Lexer::ReadSmallerToken() {
+    if (PeekCharacter() == '=') {
+        PollCharacter();
         return new Token("<=", TokenType::SMALLER_OR_EQUAL);
     }
 
     return new Token(std::string(1, currentCharacter), TokenType::SMALLER);
 }
 
-Token *Lexer::readGreaterToken() {
-    if (peekCharacter() == '>') {
-        pollCharacter();
+Token *Lexer::ReadGreaterToken() {
+    if (PeekCharacter() == '>') {
+        PollCharacter();
         return new Token(">=", TokenType::GREATER_OR_EQUAL);
     }
 

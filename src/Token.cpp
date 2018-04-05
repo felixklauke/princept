@@ -8,10 +8,10 @@ Token::Token(const std::string &value, TokenType tokenType) : content(value), to
 
 }
 
-std::string Token::getValue() {
+std::string Token::GetValue() {
     return content;
 }
 
-TokenType Token::getTokenType() {
+TokenType Token::GetTokenType() {
     return tokenType;
 }

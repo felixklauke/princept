@@ -19,9 +19,9 @@ private:
 public:
     explicit Token(const std::string &content, TokenType tokenType);
 
-    std::string getValue();
+    std::string GetValue();
 
-    TokenType getTokenType();
+    TokenType GetTokenType();
 
 };
 

@@ -14,7 +14,7 @@ class Lexer {
 public:
     explicit Lexer(const std::string &content);
 
-    Token *readNextToken();
+    Token *ReadNextToken();
 
 private:
     std::string content;
@@ -25,25 +25,25 @@ private:
 
     char currentCharacter;
 
-    void pollCharacter();
+    void PollCharacter();
 
-    char peekCharacter();
+    char PeekCharacter();
 
-    char readCharacter(unsigned long position);
+    char ReadCharacter(unsigned long position);
 
-    Token *readIntegerToken();
+    Token *ReadIntegerToken();
 
-    Token *readAlphabeticToken();
+    Token *ReadAlphabeticToken();
 
-    Token *readEqualityToken();
+    Token *ReadEqualityToken();
 
-    Token *readNegationToken();
+    Token *ReadNegationToken();
 
-    Token *readString();
+    Token *ReadString();
 
-    Token *readSmallerToken();
+    Token *ReadSmallerToken();
 
-    Token *readGreaterToken();
+    Token *ReadGreaterToken();
 };
 
 
