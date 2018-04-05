@@ -4,5 +4,6 @@
 
 #include "FunctionNode.h"
 
-FunctionNode::FunctionNode(std::string *functionName, std::vector<Node *> statements)
-        : functionName(functionName), statements(statements) {}
+FunctionNode::FunctionNode(std::string *functionName, std::vector<Node *> statements,
+                           std::vector<Node *> parameters)
+        : functionName(functionName), statements(statements), parameters(parameters) {}

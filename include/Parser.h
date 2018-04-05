@@ -29,11 +29,15 @@ private:
 
     FunctionNode *ParseFunction();
 
-    StatementNode *ParseStatement();
+    Node *ParseStatement();
 
     StatementNode *ParseVariableStatement();
 
     Node *ParseValue();
+
+    Node *ParseFunctionCall();
+
+    Node *ParseVariableAssignStatement();
 };
 
 

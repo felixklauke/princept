@@ -44,6 +44,8 @@ Token *Lexer::ReadNextToken() {
         return new Token(std::string(1, currentCharacter), TokenType::MINUS);
     } else if (currentCharacter == '.') {
         return new Token(std::string(1, currentCharacter), TokenType::DOT);
+    } else if (currentCharacter == ',') {
+        return new Token(std::string(1, currentCharacter), TokenType::COMMA);
     } else if (currentCharacter == '<') {
         return ReadSmallerToken();
     } else if (currentCharacter == '>') {

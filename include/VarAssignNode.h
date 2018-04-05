@@ -14,12 +14,10 @@
 class VarAssignNode : public StatementNode {
 
 public:
-    VarAssignNode(std::string *variableName, TokenType variableType, Node *value);
+    VarAssignNode(std::string *variableName, Node *value);
 
 private:
     std::string *variableName;
-
-    TokenType variableType;
 
     Node *value;
 

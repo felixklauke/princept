@@ -25,6 +25,7 @@ enum class TokenType {
     SMALLER_OR_EQUAL,
 
     DOT,
+    COMMA,
 
     BOOL,
     INTEGER,

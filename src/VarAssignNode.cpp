@@ -4,7 +4,7 @@
 
 #include "VarAssignNode.h"
 
-VarAssignNode::VarAssignNode(std::string *variableName, TokenType variableType, Node *value)
-        : variableName(variableName), variableType(variableType), value(value) {
+VarAssignNode::VarAssignNode(std::string *variableName, Node *value)
+        : variableName(variableName), value(value) {
 
 }
