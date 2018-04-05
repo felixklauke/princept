@@ -12,15 +12,15 @@
 
 class FunctionNode : Node {
 public:
-    FunctionNode(std::string *functionName, std::vector<Node *> statements,
-                 std::vector<Node *> parameters);
+    FunctionNode(std::string *functionName, std::vector<Node *> *statements,
+                 std::vector<Node *> *parameters);
 
 private:
     std::string *functionName;
 
-    std::vector<Node *> statements;
+    std::vector<Node *> *statements;
 
-    std::vector<Node *> parameters;
+    std::vector<Node *> *parameters;
 };
 
 

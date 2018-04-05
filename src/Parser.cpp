@@ -89,7 +89,7 @@ FunctionNode *Parser::ParseFunction() {
     }
     EatToken(TokenType::RIGHT_CURLY_BRACE);
 
-    auto *functionNode = new FunctionNode(&functionName, statements, std::vector<Node *>());
+    auto *functionNode = new FunctionNode(&functionName, &statements, &parameters);
 
     std::cout << "Found function " << functionName << " with " << statements.size() << " statements and "
               << parameters.size() << " parameters." << std::endl;
