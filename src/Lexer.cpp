@@ -92,7 +92,7 @@ Token *Lexer::readIntegerToken() {
 Token *Lexer::readAlphabeticToken() {
     std::string current;
 
-    while (isalpha(currentCharacter)) {
+    while (isalpha(currentCharacter) || isdigit(currentCharacter)) {
         current += currentCharacter;
 
         if (!isalpha(peekCharacter())) {
